@@ -1,0 +1,19 @@
+
+
+<div class="container"> 
+  <div class="container__inner">
+    <ul class="message-area">
+      <li *ngFor="let message of messages"
+        class="message-row"
+        [class.message-row__self]="message.id == id"
+        [class.message-row__others]="message.id != id">
+        <div class="message">
+          {{ message.content }}
+        </div>
+      </li>
+    </ul>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="chat-input"> 
+      <input type="text" formControlName="message" placeholder="Aa"/>
+    </form>
+  </div>
+</div>

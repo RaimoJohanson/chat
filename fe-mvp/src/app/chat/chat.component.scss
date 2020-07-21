@@ -1,0 +1,56 @@
+.container {
+  height: 100vh;
+  max-width: 40em;
+  margin: 0 auto;
+  &__inner {
+    padding: 1rem;
+  }
+}
+
+input {
+  background-color: #ebebeb;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ebebeb;
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
+
+.message {
+  padding: 1rem;
+  font-weight: lighter;
+}
+
+.message-area {
+  list-style: none;
+  padding: 0;
+}
+
+.message-row {
+  margin: 0.5rem auto;
+  display: flex;
+  align-items: flex-end;
+  max-width: 100%;
+}
+
+.message-row__self {
+  flex-direction: column;
+  .message {
+    background-color: #006eff;
+    color: #fff;
+    border-radius: 15px 5px 0px 15px;
+  }
+}
+
+.message-row__others {
+  .message {
+    background-color: #e5e6eb;
+    color: #131313;
+    border-radius: 5px 15px 15px 0px;
+  }
+}
