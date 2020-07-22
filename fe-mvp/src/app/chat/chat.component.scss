@@ -20,7 +20,8 @@ input {
   border-radius: 15px;
   box-sizing: border-box;
 }
-input:focus, textarea:focus, select:focus{
+
+input:focus, textarea:focus, select:focus {
   outline: none;
 }
 
@@ -47,7 +48,7 @@ input:focus, textarea:focus, select:focus{
 .message-row__self {
   flex-direction: column;
   .message {
-    background-color: #006eff;
+    background-color: #0184ff;
     color: #fff;
     border-radius: 15px 5px 0px 15px;
   }

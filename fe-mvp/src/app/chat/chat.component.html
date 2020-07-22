@@ -1,6 +1,6 @@
 
 
-<div class="container"> 
+<div class="container">
   <div class="container__inner">
     <div class="message-area">
       <div *ngFor="let message of messages"
@@ -15,5 +15,11 @@
     <form [formGroup]="form" (ngSubmit)="submit()" class="chat-input"> 
       <input type="text" formControlName="message" placeholder="Aa"/>
     </form>
+    <video
+      height="500"
+      width="500"
+      #webcamFeed
+      autoplay muted
+      ></video>
   </div>
 </div>

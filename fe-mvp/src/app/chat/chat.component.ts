@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { FormBuilder } from '@angular/forms';
 
@@ -16,6 +16,7 @@ export class ChatComponent implements OnInit {
   id: string;
   messages: ChatMessage[] = [];
   form = this.fb.group({ message: '' });
+  @ViewChild('webcamFeed', { static: true }) webcam: ElementRef;
 
   constructor(
     private fb: FormBuilder,
@@ -27,13 +28,9 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.startVideo(this.webcam);
     this.socket.on('connect', () => {
       this.id = this.socket.ioSocket.id;
-      this.sendMessage('test message');
-      this.sendMessage('test message');
-      this.sendMessage('test message');
-      this.sendMessage('test message');
-      this.sendMessage('test message');
     });
   }
 
@@ -54,4 +51,12 @@ export class ChatComponent implements OnInit {
     this.messages = [...this.messages, message];
   }
 
+  startVideo(vidjeo) {
+    console.log(vidjeo);
+    navigator.getUserMedia(
+    {  video: {} },
+      stream => vidjeo.nativeElement.srcObject = stream,
+      error => console.error(error)
+    );
+  }
 }

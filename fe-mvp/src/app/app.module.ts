@@ -23,7 +23,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
   ],
   providers: [
   ],
