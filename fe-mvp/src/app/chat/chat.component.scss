@@ -3,10 +3,9 @@
   max-width: 40em;
   margin: 0 auto;
   &__inner {
+    overflow-y: auto;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 100%;
+    flex-flow: column nowrap;
   }
 }
 
@@ -35,7 +34,13 @@ input:focus, textarea:focus, select:focus {
   padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  height: 500px;
+  overflow: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  scroll-snap-type: y mandatory;
+  /* for Firefox */
+  min-height: 0;
 }
 
 .message-row {
@@ -45,8 +50,16 @@ input:focus, textarea:focus, select:focus {
   max-width: 100%;
 }
 
+.message-row:first-child {
+  margin-top: auto !important;
+}
+
+.message-row:last-child {
+  scroll-snap-align: end;
+}
+
 .message-row__self {
-  flex-direction: column;
+  flex-direction: row-reverse;
   .message {
     background-color: #0184ff;
     color: #fff;
@@ -55,9 +68,43 @@ input:focus, textarea:focus, select:focus {
 }
 
 .message-row__others {
+  flex-direction: row;
   .message {
     background-color: #e5e6eb;
     color: #131313;
     border-radius: 5px 15px 15px 0px;
+  }
+}
+
+video {
+  display: none;
+}
+
+// .expression-container {
+//   text-align: center;
+//   background-color: #fff;
+//   z-index: 1;
+// }
+
+.expression-container {
+  width: 100%;
+  height: 5rem;
+  text-align: center;
+  background-color: #fff;
+  z-index: 1;
+}
+
+.chat-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  margin: 0;
+  overflow: hidden;
+  display: inline-block;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }

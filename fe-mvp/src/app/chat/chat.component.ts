@@ -1,8 +1,8 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { FormBuilder } from '@angular/forms';
 import * as faceapi from '../../face-api.min.js';
-import { keyframes } from '@angular/animations';
+
 class ChatMessage {
   id?: string;
   content: string;
@@ -66,7 +66,7 @@ export class ChatComponent implements OnInit {
 
   startVideo(video) {
     navigator.getUserMedia(
-    {  video: {} },
+      { video: {} },
       stream => video.nativeElement.srcObject = stream,
       error => console.error(error)
     );
