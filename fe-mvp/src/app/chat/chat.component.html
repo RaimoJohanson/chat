@@ -7,12 +7,12 @@
       <div *ngFor="let message of messages" class="message-row"
            [class.message-row__self]="message.id == id"
            [class.message-row__others]="message.id != id">
-        <!-- <div class="chat-avatar">
-          <img src="" alt="senior_dev"
-               [attr.src]="message.id == id
-          ? 'https://miro.medium.com/fit/c/160/160/0*ptsCuCDLa45JBrtH'
-          : 'https://hansebertcom.files.wordpress.com/2018/06/could-tonight-be-the-local-boys-big-night-out-1.gif'">
-        </div> -->
+        <div class="chat-avatar">
+          <img src="https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png" alt="senior_dev">
+<!--               [attr.src]="message.id == id-->
+<!--          ? 'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png'-->
+<!--          : 'https://hansebertcom.files.wordpress.com/2018/06/could-tonight-be-the-local-boys-big-night-out-1.gif'"-->
+        </div>
         <div class="message">
           {{ message.content }}
         </div>
