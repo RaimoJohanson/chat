@@ -1,8 +1,8 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { FormBuilder } from '@angular/forms';
 import * as faceapi from '../../face-api.min.js';
-import { keyframes } from '@angular/animations';
+
 class ChatMessage {
   id?: string;
   content: string;
@@ -66,7 +66,7 @@ export class ChatComponent implements OnInit {
 
   startVideo(video) {
     navigator.getUserMedia(
-    {  video: {} },
+      { video: {} },
       stream => video.nativeElement.srcObject = stream,
       error => console.error(error)
     );
@@ -75,13 +75,14 @@ export class ChatComponent implements OnInit {
   handleVideoPlay(event) {
     setInterval(async () => {
       const detections = await faceapi
-        .detectAllFaces(this.webcam.nativeElement, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+        .detectAllFaces(this.webcam.nativeElement, new faceapi.TinyFaceDetectorOptions())
+        .withFaceLandmarks()
+        .withFaceExpressions();
+
       if (detections && detections.length) {
-        const values = Object.values(detections[0].expressions);
-        const highest = Math.max(...values);
-        const expression = Object.keys(detections[0].expressions)
-          .find(key => detections[0].expressions[key] === highest);
-        this.sendExpression(expression);
+        const maxScoreExpression = Object.entries(detections[0].expressions).sort((a, b) => b[1] - a[1])[0][0];
+
+        this.sendExpression(maxScoreExpression);
       }
     }, 1000);
   }

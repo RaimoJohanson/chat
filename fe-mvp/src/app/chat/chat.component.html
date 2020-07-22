@@ -1,27 +1,32 @@
-
-
 <div class="container">
   <div class="container__inner">
+    <div class="expression-container">
+      <h2>{{ otherSideExpression }}</h2>
+    </div>
     <div class="message-area">
-      <div *ngFor="let message of messages"
-        class="message-row"
-        [class.message-row__self]="message.id == id"
-        [class.message-row__others]="message.id != id">
+      <div *ngFor="let message of messages" class="message-row"
+           [class.message-row__self]="message.id == id"
+           [class.message-row__others]="message.id != id">
+        <div class="chat-avatar">
+          <img src="" alt="senior_dev"
+               [attr.src]="message.id == id
+          ? 'https://miro.medium.com/fit/c/160/160/0*ptsCuCDLa45JBrtH'
+          : 'https://hansebertcom.files.wordpress.com/2018/06/could-tonight-be-the-local-boys-big-night-out-1.gif'">
+        </div>
         <div class="message">
           {{ message.content }}
         </div>
       </div>
     </div>
-    <form [formGroup]="form" (ngSubmit)="submit()" class="chat-input"> 
-      <input type="text" formControlName="message" placeholder="Aa"/>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="chat-input">
+      <input type="text" formControlName="message" placeholder="Start typing..." />
     </form>
-    <h2>{{ otherSideExpression }}</h2>
     <video
       height="500"
       width="500"
       #webcamFeed
       autoplay muted
       (play)="handleVideoPlay($event)"
-      ></video>
+    ></video>
   </div>
 </div>
