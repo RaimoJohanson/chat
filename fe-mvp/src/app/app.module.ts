@@ -8,8 +8,10 @@ import { MaterialModule } from '../material.module';
 import { ChatComponent } from './chat/chat.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { environment } from '../environments/environment';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const url = environment.apiURL;
+const config: SocketIoConfig = { url, options: { resource: 'chat-api/socket.io' } };
 
 @NgModule({
   declarations: [

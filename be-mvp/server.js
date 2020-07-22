@@ -1,3 +1,5 @@
+var express = require('express');
+var path = require('path');
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
@@ -5,15 +7,13 @@ var cors = require('cors');
 const { Console } = require('console');
 
 app.use(cors())
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
+app.use(express.static(path.join(__dirname, '../fe-mvp/dist/fe-mvp')))
 
 const connections = new Set();
 
 io.on('connection', (socket) => {
   connections.add(socket.id);
+  console.log('Connected: ', socket.id);
 
   socket.on('disconnect', () => {
     connections.delete(socket.id);
@@ -21,6 +21,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('message', (message) => {
+    console.log('Message: ', message);
     io.emit('message', { ...message, id: socket.id});
   });
 
@@ -30,6 +31,6 @@ io.on('connection', (socket) => {
 
 });
 
-http.listen(3000, () => {
-  console.log('listening on *:3000');
+http.listen(3333, () => {
+  console.log('listening on *:3333');
 });

@@ -74,16 +74,17 @@ export class ChatComponent implements OnInit {
 
   handleVideoPlay(event) {
     setInterval(async () => {
-      const detections = await faceapi
+      const detections: any[] = await faceapi
         .detectAllFaces(this.webcam.nativeElement, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
       if (detections && detections.length) {
-        const values = Object.values(detections[0].expressions);
+        const values: number[] = Object.values(detections[0].expressions);
         const highest = Math.max(...values);
         const expression = Object.keys(detections[0].expressions)
           .find(key => detections[0].expressions[key] === highest);
+        console.log(expression);
         this.sendExpression(expression);
       }
-    }, 1000);
+    }, 500);
   }
 
   loadModels() {
