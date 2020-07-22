@@ -24,6 +24,10 @@ io.on('connection', (socket) => {
     io.emit('message', { ...message, id: socket.id});
   });
 
+  socket.on('expression', (message) => {
+    io.emit('expression', { ...message, id: socket.id});
+  });
+
 });
 
 http.listen(3000, () => {

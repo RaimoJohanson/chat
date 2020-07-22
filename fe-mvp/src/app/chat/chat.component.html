@@ -15,11 +15,13 @@
     <form [formGroup]="form" (ngSubmit)="submit()" class="chat-input"> 
       <input type="text" formControlName="message" placeholder="Aa"/>
     </form>
+    <h2>{{ otherSideExpression }}</h2>
     <video
       height="500"
       width="500"
       #webcamFeed
       autoplay muted
+      (play)="handleVideoPlay($event)"
       ></video>
   </div>
 </div>

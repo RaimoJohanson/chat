@@ -1,7 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { FormBuilder } from '@angular/forms';
-
+import * as faceapi from '../../face-api.min.js';
+import { keyframes } from '@angular/animations';
 class ChatMessage {
   id?: string;
   content: string;
@@ -15,6 +16,7 @@ class ChatMessage {
 export class ChatComponent implements OnInit {
   id: string;
   messages: ChatMessage[] = [];
+  otherSideExpression = 'neutral';
   form = this.fb.group({ message: '' });
   @ViewChild('webcamFeed', { static: true }) webcam: ElementRef;
 
@@ -25,9 +27,16 @@ export class ChatComponent implements OnInit {
       console.log(message);
       this.addMessage(message);
     });
+
+    this.socket.on('expression', (expression: ChatMessage) => {
+      if (expression.id !== this.id) {
+        this.otherSideExpression = expression.content;
+      }
+    });
   }
 
   ngOnInit() {
+    this.loadModels();
     this.startVideo(this.webcam);
     this.socket.on('connect', () => {
       this.id = this.socket.ioSocket.id;
@@ -47,16 +56,42 @@ export class ChatComponent implements OnInit {
     this.form.reset();
   }
 
+  sendExpression(expression) {
+    this.socket.emit('expression', { content: expression });
+  }
+
   addMessage(message: ChatMessage) {
     this.messages = [...this.messages, message];
   }
 
-  startVideo(vidjeo) {
-    console.log(vidjeo);
+  startVideo(video) {
     navigator.getUserMedia(
     {  video: {} },
-      stream => vidjeo.nativeElement.srcObject = stream,
+      stream => video.nativeElement.srcObject = stream,
       error => console.error(error)
     );
+  }
+
+  handleVideoPlay(event) {
+    setInterval(async () => {
+      const detections = await faceapi
+        .detectAllFaces(this.webcam.nativeElement, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+      if (detections && detections.length) {
+        const values = Object.values(detections[0].expressions);
+        const highest = Math.max(...values);
+        const expression = Object.keys(detections[0].expressions)
+          .find(key => detections[0].expressions[key] === highest);
+        this.sendExpression(expression);
+      }
+    }, 1000);
+  }
+
+  loadModels() {
+    Promise.all([
+      faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+      faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+      faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+      faceapi.nets.faceExpressionNet.loadFromUri('/models'),
+    ]);
   }
 }
