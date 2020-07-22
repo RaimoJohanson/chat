@@ -30,6 +30,10 @@ export class ChatComponent implements OnInit {
     this.socket.on('connect', () => {
       this.id = this.socket.ioSocket.id;
       this.sendMessage('test message');
+      this.sendMessage('test message');
+      this.sendMessage('test message');
+      this.sendMessage('test message');
+      this.sendMessage('test message');
     });
   }
 
